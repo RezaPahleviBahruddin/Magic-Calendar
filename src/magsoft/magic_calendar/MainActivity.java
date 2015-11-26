@@ -3,6 +3,8 @@ package magsoft.magic_calendar;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +21,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // cancel the notification with id 0
+        NotificationManager notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notifManager.cancel(0);
     }
 
 

@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editKeterangan"
         android:layout_alignRight="@+id/editKeterangan"
-        android:text="@string/text_add_btn" />
+        android:text="@string/text_add_btn"
+        android:onClick="btnAddClick" />
       
 </RelativeLayout>
