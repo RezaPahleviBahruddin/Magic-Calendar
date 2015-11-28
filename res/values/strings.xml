@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Magic-Calendar</string>
+    <string name="app_name">Magic Calendar</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="action_add">Add</string>
+    <string name="add_reminder">Add Reminder</string>
+    <string name="info_add_reminder">Untuk sementara, tanggal yang dimasukkan adalah tanggal besoknya. Dan alarm akan diset bunyi pada pukul 9 pagi.</string>
+	<string name="hint_title_field">Judul</string>
+	<string name="hint_description_field">Keterangan</string>
+	<string name="text_add_btn">Tambah</string>
+    
 </resources>
