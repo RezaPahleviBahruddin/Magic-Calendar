@@ -62,7 +62,6 @@ public class MainActivity extends Activity {
         	
         	while (c.moveToNext()) {
 				Toast.makeText(this, c.getString(1), Toast.LENGTH_SHORT).show();
-				c.moveToNext();
 			}
         	
         	jadwal.close();
