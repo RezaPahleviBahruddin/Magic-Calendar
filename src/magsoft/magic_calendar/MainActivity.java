@@ -6,12 +6,15 @@ import android.app.Fragment;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+import magsoft.magic_calendar.db.JadwalTable;
 import android.os.Build;
 
 public class MainActivity extends Activity {
@@ -48,6 +51,21 @@ public class MainActivity extends Activity {
         else if (id == R.id.action_add){
         	Intent i = new Intent(this, AddReminderActivity.class);
         	startActivity(i);
+        	return true;
+        }
+        else if (id == R.id.action_show_schedules){
+        	JadwalTable jadwal = new JadwalTable(this);
+        	jadwal.open();
+        	
+        	Cursor c = jadwal.getAll();
+        	c.moveToFirst();
+        	
+        	while (c.moveToNext()) {
+				Toast.makeText(this, c.getString(1), Toast.LENGTH_SHORT).show();
+				c.moveToNext();
+			}
+        	
+        	jadwal.close();
         	return true;
         }
         return super.onOptionsItemSelected(item);
