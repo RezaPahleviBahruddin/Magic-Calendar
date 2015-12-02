@@ -58,11 +58,13 @@ public class MainActivity extends Activity {
         	jadwal.open();
         	
         	Cursor c = jadwal.getAll();
-        	c.moveToFirst();
         	
-        	while (c.moveToNext()) {
-				Toast.makeText(this, c.getString(1), Toast.LENGTH_SHORT).show();
-			}
+        	if (c.moveToFirst()){
+        		do{
+        			Toast.makeText(this, c.getString(1), Toast.LENGTH_SHORT).show();
+        		}
+        		while(c.moveToNext());
+        	}
         	
         	jadwal.close();
         	return true;
