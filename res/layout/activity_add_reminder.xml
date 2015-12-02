@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_title_field"
         android:layout_below="@+id/textView1"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:inputType="textCapSentences"/>
     
     <EditText
         android:id="@+id/editKeterangan"
@@ -25,11 +26,18 @@
         android:hint="@string/hint_description_field"
         android:layout_below="@+id/editTitle" />
     
+    <EditText
+        android:id="@+id/editDate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editKeterangan"
+        android:inputType="date" />
+    
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editKeterangan"
+        android:layout_below="@+id/editDate"
         android:layout_alignRight="@+id/editKeterangan"
         android:text="@string/text_add_btn"
         android:onClick="btnAddClick" />
