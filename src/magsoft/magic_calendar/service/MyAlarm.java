@@ -1,5 +1,7 @@
 package magsoft.magic_calendar.service;
 
+import java.util.Calendar;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -22,7 +24,10 @@ public class MyAlarm {
 	}
 	
 	public void start(){
-		alrmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 
-				AlarmManager.INTERVAL_FIFTEEN_MINUTES, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendIntent);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		calendar.set(Calendar.HOUR_OF_DAY, 4);
+		alrmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, 
+				calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendIntent);
 	}
 }
