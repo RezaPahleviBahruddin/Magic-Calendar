@@ -31,9 +31,13 @@ public class JadwalTable {
 	private SQLiteDatabase db;
 	private DBHelper dbHelper;
 	
+	private SimpleDateFormat dateFormat;
+
 	public JadwalTable(Context context) {
 		this.context = context;
 		dbHelper = new DBHelper(this.context);
+		
+		dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 	}
 	
 	private static class DBHelper extends SQLiteOpenHelper{
@@ -75,5 +79,12 @@ public class JadwalTable {
 		return db.query(DB_TABLE_NAME, new String[]{
 				KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE
 		}, null, null, null, null, KEY_DATE+" DESC");
+	}
+	
+	public Cursor getToday(){
+		Date dt = new Date();
+		return db.query(DB_TABLE_NAME, new String[]{
+				KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE
+		}, KEY_DATE+"='"+dateFormat.format(dt)+"'", null, null, null, KEY_ID+" DESC");
 	}
 }
