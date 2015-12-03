@@ -7,8 +7,9 @@
     <string name="action_add">Add</string>
     <string name="add_reminder">Add Reminder</string>
     <string name="info_add_reminder">Untuk sementara, tanggal yang dimasukkan adalah tanggal besoknya. Dan alarm akan diset bunyi pada pukul 9 pagi.</string>
-	<string name="hint_title_field">Judul</string>
-	<string name="hint_description_field">Keterangan</string>
-	<string name="text_add_btn">Tambah</string>
-    
+    <string name="hint_title_field">Judul</string>
+    <string name="hint_description_field">Keterangan</string>
+    <string name="text_add_btn">Tambah</string>
+    <string name="title_activity_control_calendar">MainActivity</string>
+
 </resources>

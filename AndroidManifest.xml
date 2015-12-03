@@ -22,15 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity 
+        <activity
             android:name="magsoft.magic_calendar.AddReminderActivity"
             android:label="@string/add_reminder"
-            android:parentActivityName="magsoft.magic_calendar.MainActivity">
-            <intent-filter >
-                
+            android:parentActivityName="magsoft.magic_calendar.MainActivity" >
+            <intent-filter>
             </intent-filter>
+        </activity>
+        <activity 
+            android:name = ""
+            ></activity>
+        <activity
+            android:name="magsoft.magic_calendar.ControlCalendarActivity"
+            android:label="@string/title_activity_control_calendar" >
         </activity>
     </application>
 
 </manifest>
+
+
