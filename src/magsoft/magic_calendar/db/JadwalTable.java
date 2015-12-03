@@ -33,7 +33,7 @@ public class JadwalTable {
 	
 	public JadwalTable(Context context) {
 		this.context = context;
-		dbHelper = new DBHelper(context);
+		dbHelper = new DBHelper(this.context);
 	}
 	
 	private static class DBHelper extends SQLiteOpenHelper{

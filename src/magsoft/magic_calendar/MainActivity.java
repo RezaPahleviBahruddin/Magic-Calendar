@@ -6,8 +6,10 @@ import android.app.Fragment;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import magsoft.magic_calendar.db.JadwalTable;
+import magsoft.magic_calendar.service.MyAlarm;
 import android.os.Build;
 
 public class MainActivity extends Activity {
@@ -70,6 +73,28 @@ public class MainActivity extends Activity {
         	return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    public void onStart(){
+    	super.onStart();
+    	
+    	final String PREF_NAME = "MagicCalendarSettings";
+    	SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
+    	
+    	if (settings.getBoolean("my_first_time", true)) {
+			// ketika aplikasi pertama kali dijalankan
+    		// register alarm
+    		MyAlarm myAlarm = new MyAlarm(this);
+    		myAlarm.start();
+    		
+    		Toast.makeText(this, "Hello this is my first time!", Toast.LENGTH_LONG).show();
+    		
+    		settings.edit().putBoolean("my_first_time", false).commit();
+		}
+    	else{
+    		Toast.makeText(this, "Hello again!", Toast.LENGTH_LONG).show();
+    	}
     }
 
 }
