@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -21,18 +22,21 @@ public class ListReminderActivity extends Activity{
 		setContentView(R.layout.activity_list_schedule);
 		
 		ListView listView = (ListView) findViewById(R.id.listSchedule);
-		listView.setAdapter(new CustomAdapter());
+		
+		JadwalTable jadwal = new JadwalTable(getApplicationContext());
+		jadwal.open();
+		Cursor c = jadwal.getAll();
+//		jadwal.close();
+		CustomAdapter ca = new CustomAdapter(c);
+		listView.setAdapter(ca);
 	}
 	
 	class CustomAdapter extends BaseAdapter{
 
 		Cursor c;
-		JadwalTable jadwal;
 		
-		public CustomAdapter() {
-			jadwal.open();
-			c = jadwal.getAll();
-			jadwal.close();
+		public CustomAdapter(Cursor c) {
+			this.c = c;
 		}
 		
 		@Override
@@ -58,11 +62,12 @@ public class ListReminderActivity extends Activity{
 			if (v== null) {
 				v= inflater.inflate(R.layout.list_schedule, parent, false);
 			}
+			getItem(position);
 			
-			TextView tv = (TextView) findViewById(R.id.txtEdit);
-			Cursor item = (Cursor) getItem(position);
-			tv.setText(item.getString(1));
-			
+			TextView tv = (TextView) v.findViewById(R.id.txtEdit);
+			TextView tv2 = (TextView) v.findViewById(R.id.txtDescription);
+			tv.setText(c.getString(1));
+			tv2.setText(c.getString(3));
 			return v;
 		}
 		

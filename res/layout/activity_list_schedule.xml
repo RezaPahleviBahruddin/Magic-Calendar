@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/listSchedule" >
-    
 
-</ListView>
+<RelativeLayout 
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent">
+
+    <TextView
+        android:id="@+id/txtFixed"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="Jadwal"
+        android:background="#fff"
+        android:gravity="center"
+        android:textSize="10pt"
+        android:shadowDx="20"
+        android:shadowDy="20"
+        android:shadowColor="#000"
+         />
+    <ListView
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:id="@+id/listSchedule"
+	    android:layout_below="@+id/txtFixed" >
+	    
+	
+	</ListView>
+
+</RelativeLayout>
+

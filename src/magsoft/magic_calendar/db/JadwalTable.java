@@ -74,6 +74,6 @@ public class JadwalTable {
 	public Cursor getAll(){
 		return db.query(DB_TABLE_NAME, new String[]{
 				KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE
-		}, null, null, null, null, KEY_DATE);
+		}, null, null, null, null, KEY_DATE+" DESC");
 	}
 }
