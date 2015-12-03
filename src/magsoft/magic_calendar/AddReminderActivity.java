@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import magsoft.magic_calendar.db.JadwalTable;
 
 public class AddReminderActivity extends Activity{
@@ -56,6 +57,11 @@ public class AddReminderActivity extends Activity{
 		String description = editDescription.getText().toString();
 		String date = editDate.getText().toString();
 		
+		if (title.equals("") || date.equals("")) {
+			Toast.makeText(this, "Input error", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
 		jadwal.insert(title, description, date);
 		
 		jadwal.close();
@@ -63,5 +69,9 @@ public class AddReminderActivity extends Activity{
 		editTitle.setText("");
 		editDescription.setText("");
 		editDate.setText("");
+		Toast.makeText(this, "Data sudah masuk", Toast.LENGTH_SHORT).show();
+		
+		// back to main activity
+		finish();
 	}
 }

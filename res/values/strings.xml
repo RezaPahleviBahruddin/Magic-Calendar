@@ -11,5 +11,6 @@
 	<string name="hint_description_field">Keterangan</string>
 	<string name="text_add_btn">Tambah</string>
 	<string name="action_show_schedules">Tampilkan data</string>
+	<string name="schedules_activity">Schedules</string>
     
 </resources>

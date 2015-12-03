@@ -31,6 +31,12 @@
                 
             </intent-filter>
         </activity>
+        <activity
+            android:name="magsoft.magic_calendar.ListReminderActivity"
+            android:label="@string/schedules_activity"
+            android:parentActivityName="magsoft.magic_calendar.MainActivity" >
+            
+        </activity>
         <receiver android:name="magsoft.magic_calendar.bc_handlers.OnAlarm">
             <intent-filter >
                 <action android:name="magsoft.magic_calendar.ON_ALARM"/>
