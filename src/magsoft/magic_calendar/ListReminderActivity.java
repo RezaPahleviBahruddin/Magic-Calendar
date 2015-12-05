@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,110 +26,51 @@ import android.widget.TextView;
 import android.widget.Toast;
 import magsoft.magic_calendar.db.JadwalTable;
 
-public class ListReminderActivity extends Activity implements OnScrollListener{
-	private int firstVisibleItem = 0;
-	private Cursor c;
-	private TextView txtFixed;
-	private int month = 0;
-	private SimpleDateFormat dateFormat;
-	private Calendar cal;
-	private final String[] monthInString= {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober",
-			"November", "Desember"};
+public class ListReminderActivity extends FragmentActivity implements View.OnLayoutChangeListener{
+
+	ViewPager mPager;
+	ScheduleAdapter mAdapter;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_list_schedule);
 		
-		ListView listView = (ListView) findViewById(R.id.listSchedule);
+		mPager = (ViewPager) findViewById(R.id.schedulePager);
+		mAdapter = new ScheduleAdapter(getSupportFragmentManager());
 		
-		txtFixed = (TextView) findViewById(R.id.txtFixed);
+		mPager.setAdapter(mAdapter);
+		mPager.setCurrentItem(mAdapter.getCount()/2);
 		
-		JadwalTable jadwal = new JadwalTable(getApplicationContext());
-		jadwal.open();
-		c = jadwal.getAll();
-//		jadwal.close();
-		CustomAdapter ca = new CustomAdapter(c);
-		dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-		cal = Calendar.getInstance();
-		c.moveToFirst();
-		
-		try {
-			cal.setTime(dateFormat.parse(c.getString(3)));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		txtFixed.setText(monthInString[cal.get(Calendar.MONTH)]);
-		
-		listView.setAdapter(ca);
-		
-		listView.setOnScrollListener(this);
-	}
-	
-	class CustomAdapter extends BaseAdapter{
-
-		Cursor c;
-		
-		public CustomAdapter(Cursor c) {
-			this.c = c;
-		}
-		
-		@Override
-		public int getCount() {
-			return c.getCount();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return c.moveToPosition(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = convertView;
-			LayoutInflater inflater = getLayoutInflater();
-			
-			if (v== null) {
-				v= inflater.inflate(R.layout.list_schedule, parent, false);
-			}
-			getItem(position);
-			
-			TextView tv = (TextView) v.findViewById(R.id.txtEdit);
-			TextView tv2 = (TextView) v.findViewById(R.id.txtDescription);
-			tv.setText(c.getString(1));
-			tv2.setText(c.getString(3));
-			return v;
-		}
+		mPager.addOnLayoutChangeListener(this);
 	}
 
 	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
-	}
-
-	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-		if (this.firstVisibleItem != firstVisibleItem){
-			Log.d("Magsoft", "firstVisibleItem -> "+firstVisibleItem+"; visibleItemCount -> "+visibleItemCount+"; totalItemCount -> "+totalItemCount);
-			this.firstVisibleItem = firstVisibleItem;
-			c.moveToPosition(firstVisibleItem);
+	public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight,
+			int oldBottom) {
+		int position = mPager.getCurrentItem();
+		
+		// set content untuk kanan dan kiri fragment
+		if (position > 0 ){
+			ScheduleFragment currentFragment = (ScheduleFragment) mAdapter.getItem(position);
+			ScheduleFragment leftFragment = (ScheduleFragment) mAdapter.getItem(position-1);
 			
-			try {
-				cal.setTime(dateFormat.parse(c.getString(3)));
-			} catch (ParseException e) {
-				e.printStackTrace();
+			if (!leftFragment.isCalendarSet()) {
+				Calendar c = (Calendar) currentFragment.getCalendar().clone();
+				c.set(Calendar.MONTH, c.get(Calendar.MONTH)-1);
+				leftFragment.setCalendar(c);
 			}
-
-			if (month != cal.get(Calendar.MONTH)) {
-				Log.d("Magsoft", "month -> "+cal.get(Calendar.MONTH));
-				month = cal.get(Calendar.MONTH);
-				txtFixed.setText(monthInString[month]);
+		}
+		
+		if (position < mAdapter.getCount()){
+			ScheduleFragment currentFragment = (ScheduleFragment) mAdapter.getItem(position);
+			ScheduleFragment rightFragment = (ScheduleFragment) mAdapter.getItem(position+1);
+			
+			if (!rightFragment.isCalendarSet()) {
+				Calendar c = (Calendar) currentFragment.getCalendar().clone();
+				c.set(Calendar.MONTH, c.get(Calendar.MONTH)+1);
+				rightFragment.setCalendar(c);
 			}
 		}
 	}

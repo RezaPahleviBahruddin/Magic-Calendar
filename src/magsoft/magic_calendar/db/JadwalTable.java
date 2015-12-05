@@ -1,6 +1,7 @@
 package magsoft.magic_calendar.db;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -86,5 +87,18 @@ public class JadwalTable {
 		return db.query(DB_TABLE_NAME, new String[]{
 				KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE
 		}, KEY_DATE+"='"+dateFormat.format(dt)+"'", null, null, null, KEY_ID+" DESC");
+	}
+
+	public Cursor getMonth(Calendar c) {
+		String year = c.get(Calendar.YEAR)+"";
+		String month = (c.get(Calendar.MONTH)+1)+"";
+		
+		if (month.length() < 2){
+			month = "0"+month;
+		}
+		
+		return db.query(DB_TABLE_NAME, new String[]{
+				KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE
+		}, KEY_DATE+" LIKE '"+year+"-"+month+"-%'", null, null, null, KEY_ID+" DESC");
 	}
 }
