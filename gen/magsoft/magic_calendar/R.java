@@ -33,17 +33,18 @@ public final class R {
         public static final int trash_white=0x7f020008;
     }
     public static final class id {
-        public static final int action_add=0x7f08000c;
-        public static final int action_delete=0x7f080010;
-        public static final int action_edit=0x7f08000f;
-        public static final int action_settings=0x7f08000d;
-        public static final int action_show_schedules=0x7f08000e;
+        public static final int action_add=0x7f08000d;
+        public static final int action_delete=0x7f080011;
+        public static final int action_edit=0x7f080010;
+        public static final int action_settings=0x7f08000e;
+        public static final int action_show_schedules=0x7f08000f;
         public static final int btnAdd=0x7f080004;
         public static final int description=0x7f080007;
         public static final int editDate=0x7f080003;
         public static final int editKeterangan=0x7f080002;
         public static final int editTitle=0x7f080001;
         public static final int listSchedule=0x7f080009;
+        public static final int lock=0x7f08000c;
         public static final int parentLayoutScheduleActivity=0x7f080006;
         public static final int schedulePager=0x7f080005;
         public static final int textView1=0x7f080000;

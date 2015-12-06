@@ -17,6 +17,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import magsoft.magic_calendar.db.JadwalTable;
@@ -138,8 +139,15 @@ public class ScheduleFragment extends Fragment implements OnScrollListener, Adap
 			
 			TextView tv = (TextView) v.findViewById(R.id.txtEdit);
 			TextView tv2 = (TextView) v.findViewById(R.id.txtDescription);
+			ImageView imgLock = (ImageView) v.findViewById(R.id.lock);
+			
 			tv.setText(cursor.getString(1));
 			tv2.setText(cursor.getString(3));
+			
+			if (cursor.getString(JadwalTable.FIELD_STATIC).equals("no")) {
+				imgLock.setImageResource(R.drawable.edit_black);
+			}
+			
 			return v;
 		}
 	}
