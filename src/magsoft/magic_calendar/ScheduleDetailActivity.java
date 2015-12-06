@@ -1,16 +1,14 @@
 package magsoft.magic_calendar;
 
+import android.content.DialogInterface;
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 import magsoft.magic_calendar.db.JadwalTable;
-import android.os.Build;
 
 public class ScheduleDetailActivity extends Activity {
 
@@ -18,12 +16,19 @@ public class ScheduleDetailActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule_detail);
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
-		}
 		
 		String title = getIntent().getExtras().get(JadwalTable.KEY_TITLE).toString();
 		setTitle(title);
+		
+		String description = getIntent().getExtras().get(JadwalTable.KEY_DESCRIPTION).toString();
+		TextView txtDescription = (TextView) findViewById(R.id.description);
+		
+		if (description == "" || description == null || description.length() == 0) {
+			description = "No Description";
+		}
+		
+		txtDescription.setText(description);
+		
 	}
 
 	@Override
@@ -42,21 +47,27 @@ public class ScheduleDetailActivity extends Activity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		else if (id == R.id.action_delete){
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("Are you sure you want to delete this?");
+			builder.setPositiveButton("Delete", new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface arg0, int arg1){
+					JadwalTable jadwal = new JadwalTable(getApplicationContext());
+					jadwal.open();
+					jadwal.delete((Integer) getIntent().getExtras().get(JadwalTable.KEY_ID));
+					jadwal.close();
+					
+					finish();
+				}
+			});
+			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					
+				}
+			});
+			builder.setCancelable(true);
+			builder.show();
+		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_schedule_detail, container, false);
-			return rootView;
-		}
 	}
 }

@@ -101,4 +101,8 @@ public class JadwalTable {
 				KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE
 		}, KEY_DATE+" LIKE '"+year+"-"+month+"-%'", null, null, null, KEY_ID+" DESC");
 	}
+
+	public void delete(int id) {
+		db.execSQL("DELETE FROM "+DB_TABLE_NAME+" WHERE "+KEY_ID+"='"+id+"'");
+	}
 }

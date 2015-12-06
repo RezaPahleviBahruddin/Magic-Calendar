@@ -29,7 +29,6 @@ public class ScheduleAdapter extends FragmentStatePagerAdapter{
 		c.set(Calendar.MONTH, c.get(Calendar.MONTH) - 1);
 		for (int i = getCount()/2-1; i < getCount()/2+2; i++){
 			fragments.get(i).setCalendar(c);
-			Log.d("Magsoft", "[initial] c -> "+c);
 			c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1);
 		}
 	}

@@ -43,8 +43,6 @@ public class ScheduleFragment extends Fragment implements OnScrollListener, Adap
 		
 		showContent();
 		
-		Log.d("Magsoft", "c -> "+c);
-		
 		return view;
 	}
 

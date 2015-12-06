@@ -36,7 +36,13 @@ public class ListReminderActivity extends FragmentActivity implements View.OnLay
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_list_schedule);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		
+
 		mPager = (ViewPager) findViewById(R.id.schedulePager);
 		mAdapter = new ScheduleAdapter(getSupportFragmentManager());
 		
