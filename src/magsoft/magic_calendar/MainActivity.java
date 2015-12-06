@@ -53,11 +53,6 @@ public class MainActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-        else if (id == R.id.action_add){
-        	Intent i = new Intent(this, AddReminderActivity.class);
-        	startActivity(i);
-        	return true;
-        }
         else if (id == R.id.action_show_schedules){
         	Intent i = new Intent(this, ListReminderActivity.class);
         	startActivity(i);

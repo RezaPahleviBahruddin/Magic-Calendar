@@ -33,10 +33,10 @@ public final class R {
         public static final int trash_white=0x7f020008;
     }
     public static final class id {
-        public static final int action_add=0x7f08000d;
+        public static final int action_add=0x7f08000c;
         public static final int action_delete=0x7f080010;
         public static final int action_edit=0x7f08000f;
-        public static final int action_settings=0x7f08000c;
+        public static final int action_settings=0x7f08000d;
         public static final int action_show_schedules=0x7f08000e;
         public static final int btnAdd=0x7f080004;
         public static final int description=0x7f080007;
@@ -60,8 +60,9 @@ public final class R {
         public static final int list_schedule=0x7f030005;
     }
     public static final class menu {
-        public static final int main=0x7f070000;
-        public static final int schedule_detail=0x7f070001;
+        public static final int list_reminder_menu=0x7f070000;
+        public static final int main=0x7f070001;
+        public static final int schedule_detail=0x7f070002;
     }
     public static final class string {
         public static final int action_add=0x7f050003;
