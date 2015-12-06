@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,13 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import magsoft.magic_calendar.db.JadwalTable;
 
-public class ScheduleFragment extends Fragment implements OnScrollListener{
+public class ScheduleFragment extends Fragment implements OnScrollListener, AdapterView.OnItemClickListener{
 	private Calendar c;
 	private View view;
 	private final String[] monthInString= {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober",
@@ -31,6 +33,8 @@ public class ScheduleFragment extends Fragment implements OnScrollListener{
 	private int month = 0;
 	private SimpleDateFormat dateFormat;
 	private Calendar cal;
+	
+	private CustomAdapter ca;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,9 +77,23 @@ public class ScheduleFragment extends Fragment implements OnScrollListener{
 			cursor.moveToFirst();
 			
 //			jadwal.close();
-			CustomAdapter ca = new CustomAdapter(cursor);
+			ca = new CustomAdapter(cursor);
 			listView.setAdapter(ca);
+			listView.setOnItemClickListener(this);
 		}
+	}
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Intent intent = new Intent(view.getContext(), ScheduleDetailActivity.class);
+		Cursor currentItem = (Cursor) ca.getItem(position);
+		
+		intent.putExtra(JadwalTable.KEY_ID, currentItem.getInt(0));
+		intent.putExtra(JadwalTable.KEY_TITLE, currentItem.getString(1));
+		intent.putExtra(JadwalTable.KEY_DESCRIPTION, currentItem.getString(2));
+		intent.putExtra(JadwalTable.KEY_DATE, currentItem.getString(3));
+		
+		startActivity(intent);
 	}
 	
 	public boolean isCalendarSet(){
@@ -101,7 +119,8 @@ public class ScheduleFragment extends Fragment implements OnScrollListener{
 
 		@Override
 		public Object getItem(int position) {
-			return cursor.moveToPosition(position);
+			cursor.moveToPosition(position);
+			return cursor;
 		}
 
 		@Override

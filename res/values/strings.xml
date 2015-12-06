@@ -7,10 +7,13 @@
     <string name="action_add">Add</string>
     <string name="add_reminder">Add Reminder</string>
     <string name="info_add_reminder">Untuk sementara, notifikasi akan ditampilkan pada pukul 9 pagi.</string>
-	<string name="hint_title_field">Judul</string>
-	<string name="hint_description_field">Keterangan</string>
-	<string name="text_add_btn">Tambah</string>
-	<string name="action_show_schedules">Tampilkan data</string>
-	<string name="schedules_activity">Schedules</string>
-    
+    <string name="hint_title_field">Judul</string>
+    <string name="hint_description_field">Keterangan</string>
+    <string name="text_add_btn">Tambah</string>
+    <string name="action_show_schedules">Tampilkan data</string>
+    <string name="schedules_activity">Schedules</string>
+    <string name="title_activity_schedule_detail">Detail</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+
 </resources>

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="magsoft.magic_calendar.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,33 +22,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity 
-            android:name="magsoft.magic_calendar.AddReminderActivity"
+        <activity
+            android:name=".AddReminderActivity"
             android:label="@string/add_reminder"
-            android:parentActivityName="magsoft.magic_calendar.MainActivity">
-            <intent-filter >
-                
+            android:parentActivityName=".MainActivity" >
+            <intent-filter>
             </intent-filter>
         </activity>
         <activity
-            android:name="magsoft.magic_calendar.ListReminderActivity"
+            android:name=".ListReminderActivity"
             android:label="@string/schedules_activity"
-            android:parentActivityName="magsoft.magic_calendar.MainActivity" >
-            
+            android:parentActivityName=".MainActivity" >
         </activity>
-        <receiver android:name="magsoft.magic_calendar.bc_handlers.OnAlarm">
-            <intent-filter >
-                <action android:name="magsoft.magic_calendar.ON_ALARM"/>
+
+        <receiver android:name=".bc_handlers.OnAlarm" >
+            <intent-filter>
+                <action android:name="magsoft.magic_calendar.ON_ALARM" />
             </intent-filter>
         </receiver>
-        <receiver android:name="magsoft.magic_calendar.bc_handlers.BootCompleted">
-            <intent-filter >
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        <receiver android:name=".bc_handlers.BootCompleted" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".ScheduleDetailActivity"
+            android:label="@string/title_activity_schedule_detail"
+            android:parentActivityName=".ListReminderActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="magsoft.magic_calendar.ListReminderActivity" />
+        </activity>
     </application>
-    <uses-permission
-        android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
 </manifest>
