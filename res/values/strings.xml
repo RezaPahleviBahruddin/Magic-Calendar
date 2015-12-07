@@ -15,5 +15,6 @@
     <string name="title_activity_schedule_detail">Detail</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
+    <string name="title_activity_edit_reminder">Edit Reminder</string>
 
 </resources>

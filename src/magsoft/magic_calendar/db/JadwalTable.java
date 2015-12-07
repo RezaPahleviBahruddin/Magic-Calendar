@@ -89,6 +89,27 @@ public class JadwalTable {
 		return db.insert(DB_TABLE_NAME, null, values);
 	}
 	
+	public long update(int id, String title, String description, String date) throws SQLException{
+		return update(id, title, description, date, "user", "no");
+	}
+	
+	public long update(int id, String title, String description, String date, String type, String isStatic) throws SQLException{
+		ContentValues values = new ContentValues();
+		values.put(KEY_TITLE, title);
+		values.put(KEY_DESCRIPTION, description);
+		values.put(KEY_DATE, date);
+		values.put(KEY_TYPE, type);
+		values.put(KEY_STATIC, isStatic);
+		
+		return db.update(DB_TABLE_NAME, values, KEY_ID+"='"+id+"'", null);
+	}
+	
+	public Cursor getById(int id){
+		return db.query(DB_TABLE_NAME, new String[]{
+				KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE, KEY_TYPE, KEY_STATIC
+		}, KEY_ID+"='"+id+"'", null, null, null, KEY_DATE+" DESC");
+	}
+	
 	public Cursor getAll(){
 		return db.query(DB_TABLE_NAME, new String[]{
 				KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE, KEY_TYPE, KEY_STATIC

@@ -1,6 +1,7 @@
 package magsoft.magic_calendar;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -44,7 +45,15 @@ public class ScheduleDetailActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_edit) {
+			Intent intent = new Intent(getApplicationContext(), EditReminderActivity.class);
+			
+			intent.putExtra(JadwalTable.KEY_ID, (Integer) getIntent().getExtras().get(JadwalTable.KEY_ID));
+			intent.putExtra(JadwalTable.KEY_TITLE, (String) getIntent().getExtras().get(JadwalTable.KEY_TITLE));
+			intent.putExtra(JadwalTable.KEY_DESCRIPTION, (String) getIntent().getExtras().get(JadwalTable.KEY_DESCRIPTION));
+			intent.putExtra(JadwalTable.KEY_DATE, (String) getIntent().getExtras().get(JadwalTable.KEY_DATE));
+			
+			startActivity(intent);
 			return true;
 		}
 		else if (id == R.id.action_delete){
