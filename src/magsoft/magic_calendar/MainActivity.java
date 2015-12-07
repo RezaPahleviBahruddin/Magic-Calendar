@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import magsoft.magic_calendar.db.JadwalTable;
 import magsoft.magic_calendar.service.MyAlarm;
@@ -51,25 +53,9 @@ public class MainActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-        else if (id == R.id.action_add){
-        	Intent i = new Intent(this, AddReminderActivity.class);
-        	startActivity(i);
-        	return true;
-        }
         else if (id == R.id.action_show_schedules){
-        	JadwalTable jadwal = new JadwalTable(this);
-        	jadwal.open();
-        	
-        	Cursor c = jadwal.getAll();
-        	
-        	if (c.moveToFirst()){
-        		do{
-        			Toast.makeText(this, c.getString(1), Toast.LENGTH_SHORT).show();
-        		}
-        		while(c.moveToNext());
-        	}
-        	
-        	jadwal.close();
+        	Intent i = new Intent(this, ListReminderActivity.class);
+        	startActivity(i);
         	return true;
         }
         return super.onOptionsItemSelected(item);
@@ -91,9 +77,6 @@ public class MainActivity extends Activity {
     		Toast.makeText(this, "Hello this is my first time!", Toast.LENGTH_LONG).show();
     		
     		settings.edit().putBoolean("my_first_time", false).commit();
-		}
-    	else{
-    		Toast.makeText(this, "Hello again!", Toast.LENGTH_LONG).show();
     	}
     }
 
