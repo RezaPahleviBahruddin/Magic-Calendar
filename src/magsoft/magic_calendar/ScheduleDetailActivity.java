@@ -2,9 +2,11 @@ package magsoft.magic_calendar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -12,24 +14,47 @@ import android.widget.Toast;
 import magsoft.magic_calendar.db.JadwalTable;
 
 public class ScheduleDetailActivity extends Activity {
-
+	private TextView txtDescription;
+	private JadwalTable jadwal;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule_detail);
 		
-		String title = getIntent().getExtras().get(JadwalTable.KEY_TITLE).toString();
+		jadwal = new JadwalTable(getApplicationContext());
+		
+		txtDescription = (TextView) findViewById(R.id.description);	
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		jadwal.open();
+		
+		Cursor c = jadwal.getById((Integer) getIntent().getExtras().get(JadwalTable.KEY_ID) );
+		
+		if (!c.moveToFirst()){
+			return;
+		}
+		
+		String title = c.getString(JadwalTable.FIELD_TITLE);
 		setTitle(title);
 		
-		String description = getIntent().getExtras().get(JadwalTable.KEY_DESCRIPTION).toString();
-		TextView txtDescription = (TextView) findViewById(R.id.description);
+		String description = c.getString(JadwalTable.FIELD_DESCRIPTION);
+		
 		
 		if (description == "" || description == null || description.length() == 0) {
 			description = "No Description";
 		}
 		
 		txtDescription.setText(description);
-		
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		jadwal.close();
 	}
 
 	@Override
