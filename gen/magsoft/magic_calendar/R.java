@@ -42,12 +42,12 @@ public final class R {
         public static final int description=0x7f080007;
         public static final int editDate=0x7f080003;
         public static final int editKeterangan=0x7f080002;
-        public static final int editTitle=0x7f080001;
+        public static final int editTitle=0x7f080000;
         public static final int listSchedule=0x7f080009;
         public static final int lock=0x7f08000c;
         public static final int parentLayoutScheduleActivity=0x7f080006;
         public static final int schedulePager=0x7f080005;
-        public static final int textView1=0x7f080000;
+        public static final int textView1=0x7f080001;
         public static final int txtDescription=0x7f08000b;
         public static final int txtEdit=0x7f08000a;
         public static final int txtFixed=0x7f080008;

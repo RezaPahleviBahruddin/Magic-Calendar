@@ -1,19 +1,28 @@
 package magsoft.magic_calendar;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 import magsoft.magic_calendar.db.JadwalTable;
 
-public class EditReminderActivity extends Activity {
+public class EditReminderActivity extends Activity implements OnClickListener{
 	EditText editTitle, editKeterangan, editDate;
 	Button btnAdd;
 	JadwalTable jadwal;
+	
+	private DatePickerDialog toDatePickerDialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,6 +33,9 @@ public class EditReminderActivity extends Activity {
 		editDate = (EditText) findViewById(R.id.editDate);
 		btnAdd = (Button) findViewById(R.id.btnAdd);
 		
+		editDate.setOnClickListener(this);
+		editDate.setFocusable(false);
+		
 		String title = getIntent().getExtras().getString(JadwalTable.KEY_TITLE);
 		String description = getIntent().getExtras().getString(JadwalTable.KEY_DESCRIPTION);
 		String date = getIntent().getExtras().getString(JadwalTable.KEY_DATE);
@@ -31,8 +43,35 @@ public class EditReminderActivity extends Activity {
 		editTitle.setText(title);
 		editKeterangan.setText(description);
 		editDate.setText(date);
+		btnAdd.setText("Update");
 		
 		jadwal = new JadwalTable(getApplicationContext());
+		Calendar newCalendar = Calendar.getInstance();
+		
+		toDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+			
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				String date = year+"";
+				
+				date += "-";
+				
+				if (++monthOfYear < 10){
+					date += "0";
+				}
+				
+				date += monthOfYear;
+				date += "-";
+				
+				if (dayOfMonth < 10){
+					date+= "0";
+				}
+				
+				date += dayOfMonth;
+				
+				editDate.setText(date);
+			}
+		}, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 	}
 	
 	public void btnAddClick(View view){
@@ -59,8 +98,17 @@ public class EditReminderActivity extends Activity {
 		editDate.setText("");
 		Toast.makeText(this, "Data sudah diperbarui", Toast.LENGTH_SHORT).show();
 		
+		
+		
 		// back to previous activity
 		finish();
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v == editDate){
+			toDatePickerDialog.show();
+		}
 	}
 	
 }
