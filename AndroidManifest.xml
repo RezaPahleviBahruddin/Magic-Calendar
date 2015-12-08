@@ -36,7 +36,19 @@
             android:name="magsoft.magic_calendar.ControlCalendarActivity"
             android:label="@string/title_activity_control_calendar" >
         </activity>
+        <receiver android:name="magsoft.magic_calendar.bc_handlers.OnAlarm">
+            <intent-filter >
+                <action android:name="magsoft.magic_calendar.ON_ALARM"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="magsoft.magic_calendar.bc_handlers.BootCompleted">
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
+    <uses-permission
+        android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
 </manifest>
 

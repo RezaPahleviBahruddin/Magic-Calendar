@@ -45,14 +45,14 @@ public class StaticCal extends LinearLayout{
 	
 	private void updateCalendar(){
 		ArrayList<Date> cells = new ArrayList<Date>();
-		Calendar calendar = (Calendar)currentDate.clone();
+		Calendar calendar = Calendar.getInstance();
 		
 		calendar.set(Calendar.DAY_OF_MONTH , 1);
 		int monthBeginningCell = calendar.get(Calendar.DAY_OF_WEEK - 1);
 		
 		calendar.add(Calendar.DAY_OF_MONTH, monthBeginningCell);
 		
-		while(cells.size() < DAYS_COUNT){
+		while(cells.size() < calendar.getMaximum(Calendar.DAY_OF_MONTH)){
 			cells.add(calendar.getTime());
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}

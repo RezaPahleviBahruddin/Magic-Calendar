@@ -12,7 +12,10 @@ import android.app.Fragment;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +26,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toast;
+import magsoft.magic_calendar.db.JadwalTable;
+import magsoft.magic_calendar.service.MyAlarm;
 import android.os.Build;
 
 public class MainActivity extends Activity {
@@ -36,7 +42,7 @@ public class MainActivity extends Activity {
         HashSet<Date> events = new HashSet<Date>();
 		events.add(new Date());
 
-		CalendarView cv = ((CalendarView)findViewById(R.layout.c));
+		CalendarView cv = ((CalendarView)findViewById(R.id.calendar_view));
 		cv.updateCalendar(events);
 
 		// assign event handler
@@ -83,7 +89,45 @@ public class MainActivity extends Activity {
         	startActivity(i);
         	return true;
         }
+        else if (id == R.id.action_show_schedules){
+        	JadwalTable jadwal = new JadwalTable(this);
+        	jadwal.open();
+        	
+        	Cursor c = jadwal.getAll();
+        	
+        	if (c.moveToFirst()){
+        		do{
+        			Toast.makeText(this, c.getString(1), Toast.LENGTH_SHORT).show();
+        		}
+        		while(c.moveToNext());
+        	}
+        	
+        	jadwal.close();
+        	return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    public void onStart(){
+    	super.onStart();
+    	
+    	final String PREF_NAME = "MagicCalendarSettings";
+    	SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
+    	
+    	if (settings.getBoolean("my_first_time", true)) {
+			// ketika aplikasi pertama kali dijalankan
+    		// register alarm
+    		MyAlarm myAlarm = new MyAlarm(this);
+    		myAlarm.start();
+    		
+    		Toast.makeText(this, "Hello this is my first time!", Toast.LENGTH_LONG).show();
+    		
+    		settings.edit().putBoolean("my_first_time", false).commit();
+		}
+    	else{
+    		Toast.makeText(this, "Hello again!", Toast.LENGTH_LONG).show();
+    	}
     }
 
 }

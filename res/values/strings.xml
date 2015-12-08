@@ -12,4 +12,6 @@
     <string name="text_add_btn">Tambah</string>
     <string name="title_activity_control_calendar">MainActivity</string>
 
+	<string name="action_show_schedules">Tampilkan data</string>
+    
 </resources>
