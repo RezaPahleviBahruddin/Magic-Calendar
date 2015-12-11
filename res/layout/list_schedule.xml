@@ -3,12 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="20dp" >
+    
+    <ImageView
+        android:src="@drawable/cal_5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/cal_date"
+        android:contentDescription="lock" />
 
     <TextView
         android:id="@+id/txtEdit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Title" />
+        android:text="Title"
+        android:layout_marginLeft="40dp" />
     
     <TextView
         android:id="@+id/txtDescription"
@@ -16,7 +24,8 @@
         android:layout_height="wrap_content"
         android:textColor="#0f0f0f"
         android:layout_below="@+id/txtEdit"
-        android:text="Description" />
+        android:text="Description"
+        android:layout_marginLeft="40dp" />
     
     <ImageView
         android:src="@drawable/lock_black"

@@ -26,8 +26,8 @@ public class ScheduleAdapter extends FragmentStatePagerAdapter{
 		}
 		
 		// initial content of three fragments
-		c.set(Calendar.MONTH, c.get(Calendar.MONTH) - 1);
-		for (int i = getCount()/2-1; i < getCount()/2+2; i++){
+		c.set(Calendar.MONTH, c.get(Calendar.MONTH) - 150);
+		for (int i = 0; i < getCount(); i++){
 			fragments.get(i).setCalendar(c);
 			c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1);
 		}

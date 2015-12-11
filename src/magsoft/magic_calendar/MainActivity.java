@@ -15,10 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import magsoft.magic_calendar.db.JadwalTable;
+import magsoft.magic_calendar.db.JadwalTableSeeder;
 import magsoft.magic_calendar.service.MyAlarm;
 import android.os.Build;
 
@@ -33,7 +35,6 @@ public class MainActivity extends Activity {
         NotificationManager notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notifManager.cancel(0);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,6 +78,8 @@ public class MainActivity extends Activity {
     		Toast.makeText(this, "Hello this is my first time!", Toast.LENGTH_LONG).show();
     		
     		settings.edit().putBoolean("my_first_time", false).commit();
+    		
+    		JadwalTableSeeder.seed(getApplicationContext());
     	}
     }
 
