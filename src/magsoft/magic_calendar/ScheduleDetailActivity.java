@@ -14,6 +14,7 @@ import magsoft.magic_calendar.db.JadwalTable;
 public class ScheduleDetailActivity extends Activity {
 	private TextView txtDescription;
 	private JadwalTable jadwal;
+	private Cursor c;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class ScheduleDetailActivity extends Activity {
 		super.onResume();
 		jadwal.open();
 		
-		Cursor c = jadwal.getById((Integer) getIntent().getExtras().get(JadwalTable.KEY_ID) );
+		c = jadwal.getById((Integer) getIntent().getExtras().get(JadwalTable.KEY_ID) );
 		
 		if (!c.moveToFirst()){
 			return;
@@ -58,7 +59,9 @@ public class ScheduleDetailActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.schedule_detail, menu);
+		if (c.getString(JadwalTable.FIELD_TYPE).equals("user")){
+			getMenuInflater().inflate(R.menu.schedule_detail, menu);
+		}
 		return true;
 	}
 

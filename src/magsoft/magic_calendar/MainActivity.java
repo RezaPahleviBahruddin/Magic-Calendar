@@ -23,6 +23,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -31,6 +34,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import magsoft.magic_calendar.db.JadwalTable;
+import magsoft.magic_calendar.db.JadwalTableSeeder;
+import magsoft.magic_calendar.service.MyAlarm;
+import android.os.Build;
 
 public class MainActivity extends Activity {
 
@@ -45,18 +52,17 @@ public class MainActivity extends Activity {
 	LinearLayout rLayout;
 	ArrayList<String> date;
 	ArrayList<String> desc;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
-		// cancel the notification with id 0
-		NotificationManager notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		notifManager.cancel(0);
-		Locale.setDefault(Locale.US);
-
-		rLayout = (LinearLayout) findViewById(R.id.text);
+        // cancel the notification with id 0
+        NotificationManager notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notifManager.cancel(0);
+        
+        rLayout = (LinearLayout) findViewById(R.id.text);
 		month = (GregorianCalendar) GregorianCalendar.getInstance();
 		itemmonth = (GregorianCalendar) month.clone();
 
@@ -148,9 +154,56 @@ public class MainActivity extends Activity {
 			}
 
 		});
-	}
+    }
 
-	protected void setNextMonth() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        else if (id == R.id.action_show_schedules){
+        	Intent i = new Intent(this, ListReminderActivity.class);
+        	startActivity(i);
+        	return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    public void onStart(){
+    	super.onStart();
+    	
+    	final String PREF_NAME = "MagicCalendarSettings";
+    	SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
+    	
+    	if (settings.getBoolean("my_first_time", true)) {
+			// ketika aplikasi pertama kali dijalankan
+    		// register alarm
+    		MyAlarm myAlarm = new MyAlarm(this);
+    		myAlarm.start();
+    		
+    		Toast.makeText(this, "Hello this is my first time!", Toast.LENGTH_LONG).show();
+    		
+    		settings.edit().putBoolean("my_first_time", false).commit();
+    		
+    		JadwalTableSeeder.seed(getApplicationContext());
+    	}
+    }
+    
+    protected void setNextMonth() {
 		if (month.get(GregorianCalendar.MONTH) == month
 				.getActualMaximum(GregorianCalendar.MONTH)) {
 			month.set((month.get(GregorianCalendar.YEAR) + 1),
@@ -209,49 +262,5 @@ public class MainActivity extends Activity {
 			adapter.notifyDataSetChanged();
 		}
 	};
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		} else if (id == R.id.action_show_schedules) {
-			Intent i = new Intent(this, ListReminderActivity.class);
-			startActivity(i);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-
-		final String PREF_NAME = "MagicCalendarSettings";
-		SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
-
-		if (settings.getBoolean("my_first_time", true)) {
-			// ketika aplikasi pertama kali dijalankan
-			// register alarm
-			MyAlarm myAlarm = new MyAlarm(this);
-			myAlarm.start();
-
-			Toast.makeText(this, "Hello this is my first time!",
-					Toast.LENGTH_LONG).show();
-
-			settings.edit().putBoolean("my_first_time", false).commit();
-		}
-	}
 
 }

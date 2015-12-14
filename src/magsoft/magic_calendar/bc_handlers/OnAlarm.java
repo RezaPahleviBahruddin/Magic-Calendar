@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import magsoft.magic_calendar.MainActivity;
+import magsoft.magic_calendar.NotificationActivity;
 import magsoft.magic_calendar.R;
 import magsoft.magic_calendar.db.JadwalTable;
 
@@ -24,17 +25,21 @@ public class OnAlarm extends BroadcastReceiver{
 		Cursor c = jadwal.getToday();
 		
 		NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(context);
-		notifBuilder.setSmallIcon(R.drawable.ic_launcher);
+		notifBuilder.setSmallIcon(R.drawable.cal_10);
 		notifBuilder.setContentTitle("Magic Calendar");
 		
-		if (c.getCount() > 0){
+		if (c.getCount() > 1){
 			notifBuilder.setContentText("Hari ini ada "+c.getCount()+" agenda");
+		}
+		else if (c.getCount() == 1){
+			c.moveToFirst();
+			notifBuilder.setContentText(""+c.getString(JadwalTable.FIELD_TITLE));
 		}
 		else {
 			notifBuilder.setContentText("Semoga hari ini berjalan lancar! :)");
 		}
 		
-		Intent i = new Intent(context, MainActivity.class);
+		Intent i = new Intent(context, NotificationActivity.class);
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 		stackBuilder.addParentStack(MainActivity.class);
 		

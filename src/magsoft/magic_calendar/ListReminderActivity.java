@@ -14,23 +14,33 @@ public class ListReminderActivity extends FragmentActivity implements View.OnLay
 	ViewPager mPager;
 	ScheduleAdapter mAdapter;
 	
+	public static int currentItem = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.activity_list_schedule);
+		
+		mPager = (ViewPager) findViewById(R.id.schedulePager);
+		mAdapter = new ScheduleAdapter(getSupportFragmentManager());
+		currentItem = mAdapter.getCount()/2;
+		
+		mPager.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+			
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight,
+					int oldBottom) {
+				currentItem = mPager.getCurrentItem();
+			}
+		});
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		
-
-		mPager = (ViewPager) findViewById(R.id.schedulePager);
-		mAdapter = new ScheduleAdapter(getSupportFragmentManager());
-		
 		mPager.setAdapter(mAdapter);
-		mPager.setCurrentItem(mAdapter.getCount()/2);
+		mPager.setCurrentItem(currentItem);
 		
 		mPager.addOnLayoutChangeListener(this);
 	}
