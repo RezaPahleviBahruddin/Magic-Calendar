@@ -6,11 +6,9 @@ import android.database.Cursor;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 import magsoft.magic_calendar.db.JadwalTable;
 
 public class ScheduleDetailActivity extends Activity {
@@ -88,6 +86,7 @@ public class ScheduleDetailActivity extends Activity {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage("Are you sure you want to delete this?");
 			builder.setPositiveButton("Delete", new DialogInterface.OnClickListener(){
+				@Override
 				public void onClick(DialogInterface arg0, int arg1){
 					JadwalTable jadwal = new JadwalTable(getApplicationContext());
 					jadwal.open();
@@ -98,6 +97,7 @@ public class ScheduleDetailActivity extends Activity {
 				}
 			});
 			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					
 				}
