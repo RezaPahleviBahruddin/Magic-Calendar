@@ -103,6 +103,61 @@ public class JadwalTableSeeder {
 		{"Hari Anak Nasional", "", "2015-07-23", "system", "yes", "no"},
 		
 		// Agustus 2015 and the statics
+		{"Hari Dharma Wanita Nasional", "", "2015-08-05", "system", "yes", "no"},
+		{"Hari Ulang Tahun ASEAN", "", "2015-08-08", "system", "yes", "no"},
+		{"Hari Pramuka", "", "2015-08-14", "system", "yes", "no"},
+		{"Hari Kemerdekaan Indonesia", "Hari Proklamasi Kemerdekaan Republik Indonesia sejak tahun 1945", "2015-08-17", "system", "yes", "yes"},
+		{"Hari Maritim Nasional", "", "2015-08-21", "system", "yes", "no"},
+		
+		// September
+		{"Hari Buruh", "", "2015-09-01", "system", "yes", "no"},
+		{"Hari Olahraga Nasional", "", "2015-09-09", "system", "yes", "no"},
+		{"Hari Radio Republik Indonesia", "Sering juga disingkat Hari RRI", "2015-09-11", "system", "yes", "no"},
+		{"Hari Peringatan Serangan 11 September", "", "2015-09-11", "system", "yes", "no"},
+		{"Hari Palang Merah Indonesia", "", "2015-09-17", "system", "yes", "no"},
+		{"Hari Perhubungan Nasional", "", "2015-09-17", "system", "yes", "no"},
+		{"Hari Perdamaian Dunia", "", "2015-09-21", "system", "yes", "no"},
+		{"Hari Raya Idul Adha", "", "2015-09-24", "system", "no", "yes"},
+		{"Hari Tani", "", "2015-09-24", "system", "yes", "no"},
+		{"Hari Jantung Sedunia", "", "2015-09-29", "system", "yes", "no"},
+		{"Hari Peringatan G30SPKI", "Gerakan 30 September 1965", "2015-09-30", "system", "yes", "no"},
+		
+		// Oktober 2015 and the statics
+		{"Hari Kesaktian Pancasila", "", "2015-10-01", "system", "yes", "no"},
+		{"Hari Bakti Nasional", "", "2015-10-02", "system", "yes", "no"},
+		{"Hari Hewan Sedunia", "", "2015-10-04", "system", "yes", "no"},
+		{"Hari Tentara Nasional Indonesia", "TNI", "2015-10-05", "system", "yes", "no"},
+		{"Satu Muharram", "Hari Tahun Baru Hijriah 1437", "2015-10-14", "system", "no", "yes"},
+		{"Hari Pangan Sedunia", "", "2015-10-16", "system", "yes", "no"},
+		{"Hari Santri Nasional", "", "2015-10-22", "system", "yes", "no"},
+		{"Hari Dokter Nasional", "", "2015-10-24", "system", "yes", "no"},
+		{"Hari Perserikatan Bangsa-Bangsa", "Atau Hari PBB", "2015-10-24", "system", "yes", "no"},
+		{"Hari Listrik Nasional", "", "2015-10-27", "system", "yes", "no"},
+		{"Hari Sumpah Pemuda", "", "2015-10-28", "system", "yes", "no"},
+		
+		// November 2015 and the statics
+		{"Hari Inovasi Indonesia", "", "2015-11-01", "system", "yes", "no"},
+		{"Hari Pahlawan", "", "2015-11-10", "system", "yes", "no"},
+		{"Hari Ayah Nasional", "", "2015-11-12", "system", "yes", "no"},
+		{"Hari Diabetes International", "", "2015-11-14", "system", "yes", "no"},
+		{"Hari Anak-Anak Sedunia", "", "2015-11-20", "system", "yes", "no"},
+		{"Hari Pohon", "", "2015-11-21", "system", "yes", "no"},
+		{"Hari Guru", "", "2015-11-25", "system", "yes", "no"},
+		{"Hari Menanam Pohon Sedunia", "", "2015-11-28", "system", "yes", "no"},
+		
+		// Desember 2015 and the statics
+		{"Hari AIDS sedunia", "", "2015-12-01", "system", "yes", "no"},
+		{"Hari Aramada dan Anti Korupsi", "", "2015-12-09", "system", "yes", "no"},
+		{"Pilkada Serentak", "", "2015-12-09", "system", "no", "yes"},
+		{"Hari Hak Asasi Manusia", "", "2015-12-10", "system", "yes", "no"},
+		{"Hari Transmigrasi", "", "2015-12-12", "system", "yes", "no"},
+		{"Hari Nusantara", "", "2015-12-13", "system", "yes", "no"},
+		{"Hari Infanteri", "", "2015-12-15", "system", "yes", "no"},
+		{"Hari Bela Negara", "", "2015-12-19", "system", "yes", "no"},
+		{"Hari Ibu", "", "2015-12-22", "system", "yes", "no"},
+		{"Cuti Bersama Malam Natal", "", "2015-12-24", "system", "yes", "yes"},
+		{"Hari Maulid Nabi Muhammad SAW", "", "2015-12-24", "system", "no", "yes"},
+		{"Hari Natal", "", "2015-12-25", "system", "yes", "yes"},
 	};
 	
 	public static void seed(Context context){
