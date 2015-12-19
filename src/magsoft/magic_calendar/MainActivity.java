@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import magsoft.magic_calendar.service.MyAlarm;
+import magsoft.magic_calendar.welcome.screen.WelcomeScreenView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -56,6 +57,25 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // check for wheter the application is on the first time launch or not
+        final String PREF_NAME = "MagicCalendarSettings";
+    	SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
+    	
+    	if (settings.getBoolean("my_first_time", true)) {
+			// ketika aplikasi pertama kali dijalankan
+    		// register alarm
+    		MyAlarm myAlarm = new MyAlarm(this);
+    		myAlarm.start();
+    		
+    		Toast.makeText(this, "Hello this is my first time!", Toast.LENGTH_LONG).show();
+    		
+    		settings.edit().putBoolean("my_first_time", false).commit();
+    		
+    		setContentView(new WelcomeScreenView(this));
+    		getActionBar().hide();
+    		return;
+    	}
         setContentView(R.layout.activity_main);
 
         // cancel the notification with id 0
@@ -180,27 +200,6 @@ public class MainActivity extends Activity {
         	return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-    
-    @Override
-    public void onStart(){
-    	super.onStart();
-    	
-    	final String PREF_NAME = "MagicCalendarSettings";
-    	SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
-    	
-    	if (settings.getBoolean("my_first_time", true)) {
-			// ketika aplikasi pertama kali dijalankan
-    		// register alarm
-    		MyAlarm myAlarm = new MyAlarm(this);
-    		myAlarm.start();
-    		
-    		Toast.makeText(this, "Hello this is my first time!", Toast.LENGTH_LONG).show();
-    		
-    		settings.edit().putBoolean("my_first_time", false).commit();
-    		
-    		JadwalTableSeeder.seed(getApplicationContext());
-    	}
     }
     
     protected void setNextMonth() {

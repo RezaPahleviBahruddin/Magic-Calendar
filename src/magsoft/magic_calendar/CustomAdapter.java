@@ -51,7 +51,7 @@ public class CustomAdapter extends BaseAdapter{
 		tv.setText(cursor.getString(1));
 		tv2.setText(cursor.getString(3));
 		
-		if (cursor.getString(JadwalTable.FIELD_STATIC).equals("no")) {
+		if (!cursor.getString(JadwalTable.FIELD_TYPE).equals("system")) {
 			imgLock.setImageResource(R.drawable.edit_black);
 		}
 		
