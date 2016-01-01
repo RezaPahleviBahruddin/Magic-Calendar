@@ -62,7 +62,8 @@
         android:layout_below="@+id/daysList"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:listSelector="@android:color/transparent"
+        android:listSelector="@null"
+        android:fadingEdgeLength="0px"
         android:numColumns="7"
         android:stretchMode="columnWidth" />
      

@@ -183,11 +183,12 @@ public class CalendarAdapter extends BaseAdapter {
 		timeSelected = currentTime;
 		
 		// do your stuff here
-		Log.d("Magsoft", "month -> "+month.get(Calendar.MONTH)+";date -> "+currentItem.getText().toString());
+//		Log.d("Magsoft", "month -> "+month.get(Calendar.MONTH)+";date -> "+currentItem.getText().toString());
 		
 		
 		// open list schedule activity based on the selected date
 		Intent intent = new Intent(mContext, ListReminderActivity.class);
+		intent.putExtra("year", month.get(Calendar.YEAR));
 		intent.putExtra("month", month.get(Calendar.MONTH));
 		intent.putExtra("day", currentItem.getText().toString());
 		intent.putExtra("type", "daily");
@@ -247,6 +248,10 @@ public class CalendarAdapter extends BaseAdapter {
 		maxP = pmonth.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 
 		return maxP;
+	}
+	
+	public Calendar getCalendar(){
+		return this.month;
 	}
 
 }
