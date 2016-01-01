@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class JadwalTable {
 	public static final String KEY_ID = "id";
@@ -122,12 +123,23 @@ public class JadwalTable {
 	public Cursor getToday(){
 		Date dt = new Date();
 		Calendar curCal = Calendar.getInstance();
-		int month = curCal.get(Calendar.MONTH)+1;
-		int day = curCal.get(Calendar.DAY_OF_MONTH);
+		String month = (curCal.get(Calendar.MONTH)+1)+"";
+		String day = (curCal.get(Calendar.DAY_OF_MONTH) + "");
+		
+		if (day.length() < 2){
+			day = "0"+day;
+		}
+		
+		if (month.length() < 2){
+			month = "0"+month;
+		}
+		
+		Log.d("Magsoft", "month -> "+month+";day -> "+day);
+		
 		return db.query(DB_TABLE_NAME, new String[]{
 						KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE, KEY_TYPE, KEY_STATIC, KEY_IS_HOLIDAY,
 						"strftime('%d', date) as day"
-				}, KEY_DATE+"=? or ("+KEY_STATIC+"=? and "+KEY_DATE+" LIKE ?)", 
+				}, KEY_DATE+" = ? or ("+KEY_STATIC+" = ? and "+KEY_DATE+" LIKE ?)", 
 				new String[]{dateFormat.format(dt), "yes", "%-"+month+"-"+day}, null, null, "day");
 	}
 
