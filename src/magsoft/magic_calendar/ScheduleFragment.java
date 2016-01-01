@@ -19,6 +19,8 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemClic
 	private final String[] monthInString= {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober",
 			"November", "Desember"};
 	
+	private final String[] dayInString = {"","Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"};
+	
 	private Cursor cursor;
 	
 	private CustomAdapter ca;
@@ -44,9 +46,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemClic
 	public void showContent(){
 		TextView txtFixed = (TextView) view.findViewById(R.id.txtFixed);
 		
-		if (isCalendarSet()){
-			txtFixed.setText(monthInString[c.get(Calendar.MONTH)]+" "+c.get(Calendar.YEAR));
-			
+		if (isCalendarSet()){	
 			ListView listView = (ListView) view.findViewById(R.id.listSchedule);
 			
 			txtFixed = (TextView) view.findViewById(R.id.txtFixed);
@@ -54,7 +54,16 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemClic
 			JadwalTable jadwal = new JadwalTable(view.getContext());
 			jadwal.open();
 			
-			cursor = jadwal.getMonth(c);
+			// if the type is daily
+			if (ListReminderActivity.type.equals("daily")){
+				txtFixed.setText(dayInString[c.get(Calendar.DAY_OF_WEEK)]+", "+c.get(Calendar.DAY_OF_MONTH)+" "+monthInString[(c.get(Calendar.MONTH))]+" "+c.get(Calendar.YEAR));
+				cursor = jadwal.getByDay(c);
+			}
+			else{
+				txtFixed.setText(monthInString[c.get(Calendar.MONTH)]+" "+c.get(Calendar.YEAR));
+				cursor = jadwal.getMonth(c);
+			}
+			
 			if (cursor == null) {
 				return;
 			}

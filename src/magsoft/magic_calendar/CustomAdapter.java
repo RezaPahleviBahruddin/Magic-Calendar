@@ -51,7 +51,15 @@ public class CustomAdapter extends BaseAdapter{
 		tv.setText(cursor.getString(1));
 		
 		String description = cursor.getString(JadwalTable.FIELD_DESCRIPTION);
-		tv2.setText(description.length() == 0 ? "No Description":description.substring(0, 20));
+		
+		if (description.length() > 20){
+			description = description.substring(0, 20);
+		}
+		else if (description.length() < 1) {
+			description = "No description";
+		}
+		
+		tv2.setText(description);
 		
 		if (!cursor.getString(JadwalTable.FIELD_TYPE).equals("system")) {
 			imgLock.setImageResource(R.drawable.edit_black);

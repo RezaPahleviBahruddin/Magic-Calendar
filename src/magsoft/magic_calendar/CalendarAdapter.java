@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -44,6 +45,8 @@ public class CalendarAdapter extends BaseAdapter {
 	private ArrayList<String> items;
 	public static List<String> dayString;
 	private View previousView;
+	
+	private long timeSelected = 0;
 
 	public CalendarAdapter(Context c, GregorianCalendar monthCalendar) {
 		CalendarAdapter.dayString = new ArrayList<String>();
@@ -141,6 +144,15 @@ public class CalendarAdapter extends BaseAdapter {
 		return v;
 	}
 
+	/**
+	 * I don't know what happened. But every time i select the date, this function
+	 * is executed two times! Its a lot confusing.
+	 * 
+	 * So because i can't think clearly what really happened, im here created a
+	 * variable to store the time this function is executed. If the currentTime and 
+	 * the lastTime is divided by less than a second, it means the setselected method
+	 * doesn't need to do something.
+	 * */
 	public View setSelected(View view) {
 		if (previousView != null) {
 			previousView.setBackgroundResource(R.drawable.list_item_background);
@@ -154,13 +166,25 @@ public class CalendarAdapter extends BaseAdapter {
 		TextView currentItem = (TextView) view.findViewById(R.id.date);
 		currentItem.setTextColor(Color.rgb(240, 240, 240));
 		
+		// check for the first time its executed
 		if (firstSelected){
 			firstSelected = false;
 			return view;
 		}
 		
+		/*
+		 * this checking is for preventing the method from being
+		 * executed two times
+		 */
+		long currentTime = System.currentTimeMillis();
+		if (currentTime-timeSelected < 1000){
+			return view;
+		}
+		timeSelected = currentTime;
+		
 		// do your stuff here
 		Log.d("Magsoft", "month -> "+month.get(Calendar.MONTH)+";date -> "+currentItem.getText().toString());
+		
 		
 		// open list schedule activity based on the selected date
 		Intent intent = new Intent(mContext, ListReminderActivity.class);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ public class ListReminderActivity extends FragmentActivity implements View.OnLay
 
 	ViewPager mPager;
 	ScheduleAdapter mAdapter;
+	public static String type;
 	
 	public static int currentItem = 0;
 	
@@ -21,10 +23,21 @@ public class ListReminderActivity extends FragmentActivity implements View.OnLay
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_schedule);
 		
+		// check for the type whether its daily or monthly
+		if (type == null)
+			type = "monthly";
+		
+		if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("type")){
+			type = getIntent().getExtras().getString("type");
+		}
+		
+		Log.d("Magsoft", "type -> "+type);
+		
 		mPager = (ViewPager) findViewById(R.id.schedulePager);
 		mAdapter = new ScheduleAdapter(getSupportFragmentManager());
 		currentItem = mAdapter.getCount()/2;
 		
+		// always listen to the change of current item
 		mPager.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
 			
 			@Override
@@ -93,5 +106,11 @@ public class ListReminderActivity extends FragmentActivity implements View.OnLay
 				rightFragment.setCalendar(c);
 			}
 		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		type = null;
 	}
 }

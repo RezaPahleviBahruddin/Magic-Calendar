@@ -121,10 +121,16 @@ public class JadwalTable {
 	}
 	
 	public Cursor getToday(){
-		Date dt = new Date();
-		Calendar curCal = Calendar.getInstance();
-		String month = (curCal.get(Calendar.MONTH)+1)+"";
-		String day = (curCal.get(Calendar.DAY_OF_MONTH) + "");
+		Calendar c = Calendar.getInstance();
+		
+		return getByDay(c);
+	}
+	
+	public Cursor getByDay(Calendar c) {
+		String year = c.get(Calendar.YEAR) +"";
+		String month = (c.get(Calendar.MONTH)+1)+"";
+		String day = c.get(Calendar.DAY_OF_MONTH) + "";
+		String dateToday;
 		
 		if (day.length() < 2){
 			day = "0"+day;
@@ -134,13 +140,13 @@ public class JadwalTable {
 			month = "0"+month;
 		}
 		
-		Log.d("Magsoft", "month -> "+month+";day -> "+day);
+		dateToday = year+"-"+month+"-"+day;
 		
 		return db.query(DB_TABLE_NAME, new String[]{
 						KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_DATE, KEY_TYPE, KEY_STATIC, KEY_IS_HOLIDAY,
 						"strftime('%d', date) as day"
 				}, KEY_DATE+" = ? or ("+KEY_STATIC+" = ? and "+KEY_DATE+" LIKE ?)", 
-				new String[]{dateFormat.format(dt), "yes", "%-"+month+"-"+day}, null, null, "day");
+				new String[]{dateToday, "yes", "%-"+month+"-"+day}, null, null, "day");
 	}
 
 	public Cursor getMonth(Calendar c) {
@@ -162,4 +168,5 @@ public class JadwalTable {
 	public long delete(int id) {
 		return db.delete(DB_TABLE_NAME, KEY_ID+"=? and type != ?", new String[]{""+id, "system"});
 	}
+
 }

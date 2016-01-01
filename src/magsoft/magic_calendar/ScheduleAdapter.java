@@ -23,8 +23,21 @@ public class ScheduleAdapter extends FragmentStatePagerAdapter{
 			ScheduleFragment frag = new ScheduleFragment();
 			fragments.add(frag);
 		}
+
 		
-		// initial content of three fragments
+
+		// if the type is daily
+		if (ListReminderActivity.type.equals("daily")){
+			// initial content of fragments
+			c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) - 150);
+			for (int i = 0; i < getCount(); i++){
+				fragments.get(i).setCalendar(c);
+				c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
+			}
+			return;
+		}
+		
+		// initial content of fragments
 		c.set(Calendar.MONTH, c.get(Calendar.MONTH) - 150);
 		for (int i = 0; i < getCount(); i++){
 			fragments.get(i).setCalendar(c);
