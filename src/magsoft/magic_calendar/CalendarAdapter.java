@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class CalendarAdapter extends BaseAdapter {
 	int mnthlength;
 	String itemvalue, curentDateString;
 	DateFormat df;
+	boolean firstSelected;
 
 	private ArrayList<String> items;
 	public static List<String> dayString;
@@ -152,7 +154,20 @@ public class CalendarAdapter extends BaseAdapter {
 		TextView currentItem = (TextView) view.findViewById(R.id.date);
 		currentItem.setTextColor(Color.rgb(240, 240, 240));
 		
+		if (firstSelected){
+			firstSelected = false;
+			return view;
+		}
+		
+		// do your stuff here
 		Log.d("Magsoft", "month -> "+month.get(Calendar.MONTH)+";date -> "+currentItem.getText().toString());
+		
+		// open list schedule activity based on the selected date
+		Intent intent = new Intent(mContext, ListReminderActivity.class);
+		intent.putExtra("month", month.get(Calendar.MONTH));
+		intent.putExtra("day", currentItem.getText().toString());
+		intent.putExtra("type", "daily");
+		view.getContext().startActivity(intent);
 		
 		return view;
 	}
@@ -191,6 +206,8 @@ public class CalendarAdapter extends BaseAdapter {
 			dayString.add(itemvalue);
 
 		}
+		
+		firstSelected = true;
 	}
 
 	private int getMaxP() {
