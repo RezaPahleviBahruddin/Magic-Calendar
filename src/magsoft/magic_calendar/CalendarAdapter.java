@@ -3,18 +3,21 @@ package magsoft.magic_calendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CalendarAdapter extends BaseAdapter {
 	private Context mContext;
@@ -140,6 +143,10 @@ public class CalendarAdapter extends BaseAdapter {
 		}
 		previousView = view;
 		view.setBackgroundResource(R.drawable.calendar_cel_selectl);
+		
+		TextView currentItem = (TextView) view.findViewById(R.id.date);
+		Log.d("Magsoft", "month -> "+month.get(Calendar.MONTH)+";date -> "+currentItem.getText().toString());
+		
 		return view;
 	}
 
