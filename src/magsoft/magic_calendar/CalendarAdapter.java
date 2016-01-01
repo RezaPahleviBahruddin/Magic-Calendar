@@ -96,16 +96,18 @@ public class CalendarAdapter extends BaseAdapter {
 		// checking whether the day is in current month or not.
 		if ((Integer.parseInt(gridvalue) > 1) && (position < firstDay)) {
 			// setting offdays to white color.
-			dayView.setTextColor(Color.WHITE);
+			dayView.setTextColor(Color.rgb(140, 140, 140));
 			dayView.setClickable(false);
 			dayView.setFocusable(false);
 		} else if ((Integer.parseInt(gridvalue) < 7) && (position > 28)) {
-			dayView.setTextColor(Color.WHITE);
+			// i dont really understand what this is block for
+			
+			dayView.setTextColor(Color.rgb(100,100,100));
 			dayView.setClickable(false);
 			dayView.setFocusable(false);
 		} else {
 			// setting curent month's days in blue color.
-			dayView.setTextColor(Color.BLUE);
+			dayView.setTextColor(Color.rgb(100, 100, 100));
 		}
 
 		if (dayString.get(position).equals(curentDateString)) {
@@ -128,23 +130,28 @@ public class CalendarAdapter extends BaseAdapter {
 		}
 
 		// show icon if date is not empty and it exists in the items array
-		ImageView iw = (ImageView) v.findViewById(R.id.date_icon);
-		if (date.length() > 0 && items != null && items.contains(date)) {
-			iw.setVisibility(View.VISIBLE);
-		} else {
-			iw.setVisibility(View.INVISIBLE);
-		}
+//		ImageView iw = (ImageView) v.findViewById(R.id.date_icon);
+//		if (date.length() > 0 && items != null && items.contains(date)) {
+//			iw.setVisibility(View.VISIBLE);
+//		} else {
+//			iw.setVisibility(View.INVISIBLE);
+//		}
 		return v;
 	}
 
 	public View setSelected(View view) {
 		if (previousView != null) {
 			previousView.setBackgroundResource(R.drawable.list_item_background);
+			
+			TextView previousDate = (TextView) previousView.findViewById(R.id.date);
+			previousDate.setTextColor(Color.rgb(100, 100, 100));
 		}
 		previousView = view;
 		view.setBackgroundResource(R.drawable.calendar_cel_selectl);
 		
 		TextView currentItem = (TextView) view.findViewById(R.id.date);
+		currentItem.setTextColor(Color.rgb(240, 240, 240));
+		
 		Log.d("Magsoft", "month -> "+month.get(Calendar.MONTH)+";date -> "+currentItem.getText().toString());
 		
 		return view;
