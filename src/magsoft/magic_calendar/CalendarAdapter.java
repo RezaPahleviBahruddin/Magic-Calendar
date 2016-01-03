@@ -40,6 +40,7 @@ public class CalendarAdapter extends BaseAdapter {
 	int lastWeekDay;
 	int leftDays;
 	int mnthlength;
+	int temporaryMonth = -1;
 	String itemvalue, curentDateString;
 	DateFormat df;
 	boolean firstSelected;
@@ -101,9 +102,9 @@ public class CalendarAdapter extends BaseAdapter {
 		// taking last part of date. ie; 2 from 2012-12-02
 		String gridvalue = separatedTime[2].replaceFirst("^0*", "");
 		// checking whether the day is in current month or not.
-		if ((Integer.parseInt(gridvalue) > 1) && (position < firstDay)) {
+		if (position < firstDay - 1 || Integer.parseInt(separatedTime[1]) > month.get(Calendar.MONTH) + 1) {
 			// setting offdays to white color.
-			dayView.setTextColor(Color.rgb(140, 140, 140));
+			dayView.setTextColor(Color.rgb(200, 200, 200));
 			dayView.setClickable(false);
 			dayView.setFocusable(false);
 		} else if ((Integer.parseInt(gridvalue) < 7) && (position > 28)) {
@@ -118,8 +119,8 @@ public class CalendarAdapter extends BaseAdapter {
 		}
 		
 		// call function for checking if this is a holiday or not
-		if (!((Integer.parseInt(gridvalue) < 7) && (position > 28))){
-			if (isHoliday(gridvalue) == 1){
+		if ( !(position < firstDay - 1 || Integer.parseInt(separatedTime[1]) > month.get(Calendar.MONTH) + 1) ){
+			if (isHoliday(gridvalue	) == 1){
 				dayView.setTextColor(Color.RED);
 			}
 			else if (isHoliday(gridvalue) == 2){
@@ -176,6 +177,12 @@ public class CalendarAdapter extends BaseAdapter {
 		view.setBackgroundResource(R.drawable.calendar_cel_selectl);
 		
 		TextView currentItem = (TextView) view.findViewById(R.id.date);
+		
+		// check if this is not the day out of the month
+		if (currentItem.getCurrentTextColor() == Color.rgb(200, 200, 200)){
+			return view;
+		}
+		
 		currentItem.setTextColor(Color.rgb(240, 240, 240));
 		
 		// check for the first time its executed
@@ -196,7 +203,6 @@ public class CalendarAdapter extends BaseAdapter {
 		
 		// do your stuff here
 //		Log.d("Magsoft", "month -> "+month.get(Calendar.MONTH)+";date -> "+currentItem.getText().toString());
-		
 		
 		// open list schedule activity based on the selected date
 		Intent intent = new Intent(mContext, ListReminderActivity.class);
@@ -290,10 +296,17 @@ public class CalendarAdapter extends BaseAdapter {
 		// get the data from table by passing the calendar
 		Cursor c = table.getByDay(calendar);
 		
+		boolean sunday = calendar.get(Calendar.DAY_OF_WEEK) == 1;
+		if (sunday){
+			return 1;
+		}
 		// looping through the cursor
 		if (c.moveToFirst()){
 			do{
 				// if it is a holiday then return 1;
+				
+				// also chechk whether its a sunday
+				
 				if (c.getString(JadwalTable.FIELD_IS_HOLIDAY).equals("yes")){
 					return 1;
 				}

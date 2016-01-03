@@ -19,7 +19,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemClic
 	private final String[] monthInString= {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober",
 			"November", "Desember"};
 	
-	private final String[] dayInString = {"","Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"};
+	private final String[] dayInString = {"","Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
 	
 	private Cursor cursor;
 	

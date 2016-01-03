@@ -19,7 +19,7 @@ public class ScheduleAdapter extends FragmentStatePagerAdapter{
 		fragments = new ArrayList<ScheduleFragment>();
 		
 		// initial fragments
-		for (int i = 0; i < 300; i++) {
+		for (int i = 0; i < 600; i++) {
 			ScheduleFragment frag = new ScheduleFragment();
 			fragments.add(frag);
 		}
@@ -29,7 +29,7 @@ public class ScheduleAdapter extends FragmentStatePagerAdapter{
 		// if the type is daily
 		if (ListReminderActivity.type.equals("daily")){
 			// initial content of fragments
-			c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) - 150);
+			c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) - 300);
 			for (int i = 0; i < getCount(); i++){
 				fragments.get(i).setCalendar(c);
 				c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
@@ -38,7 +38,7 @@ public class ScheduleAdapter extends FragmentStatePagerAdapter{
 		}
 		
 		// initial content of fragments
-		c.set(Calendar.MONTH, c.get(Calendar.MONTH) - 150);
+		c.set(Calendar.MONTH, c.get(Calendar.MONTH) - 300);
 		for (int i = 0; i < getCount(); i++){
 			fragments.get(i).setCalendar(c);
 			c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1);
