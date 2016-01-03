@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import magsoft.magic_calendar.db.JadwalTable;
 
 public class CalendarAdapter extends BaseAdapter {
 	private Context mContext;
@@ -113,6 +115,16 @@ public class CalendarAdapter extends BaseAdapter {
 		} else {
 			// setting curent month's days in blue color.
 			dayView.setTextColor(Color.rgb(100, 100, 100));
+		}
+		
+		// call function for checking if this is a holiday or not
+		if (!((Integer.parseInt(gridvalue) < 7) && (position > 28))){
+			if (isHoliday(gridvalue) == 1){
+				dayView.setTextColor(Color.RED);
+			}
+			else if (isHoliday(gridvalue) == 2){
+				dayView.setTextColor(Color.BLUE);
+			}
 		}
 
 		if (dayString.get(position).equals(curentDateString)) {
@@ -252,6 +264,49 @@ public class CalendarAdapter extends BaseAdapter {
 	
 	public Calendar getCalendar(){
 		return this.month;
+	}
+	
+	
+	/**
+	 * this function is for checking whether this is holiday or not.
+	 * or if there is a schedule on a day.
+	 * 
+	 * this will return 
+	 * 1 if the day is holiday
+	 * 2 if the day is not holiday but there is some schedules on it
+	 * 0 if there is nothing on the day
+	 * */
+	public int isHoliday(String day){
+		// create the instance of table
+		JadwalTable table = new JadwalTable(mContext);
+		
+		// open the connection
+		table.open();
+		
+		// clone the current instance of calendar and set the day to be the value passed
+		Calendar calendar = (Calendar) month.clone();
+		calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+		
+		// get the data from table by passing the calendar
+		Cursor c = table.getByDay(calendar);
+		
+		// looping through the cursor
+		if (c.moveToFirst()){
+			do{
+				// if it is a holiday then return 1;
+				if (c.getString(JadwalTable.FIELD_IS_HOLIDAY).equals("yes")){
+					return 1;
+				}
+			}
+			while(c.moveToNext());
+		}
+		
+		// if there is no holiday but reminder, then return 2
+		if (c.getCount() > 0){
+			return 2;
+		}
+		
+		return 0;
 	}
 
 }

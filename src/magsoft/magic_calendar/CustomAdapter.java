@@ -47,6 +47,7 @@ public class CustomAdapter extends BaseAdapter{
 		TextView tv = (TextView) v.findViewById(R.id.txtEdit);
 		TextView tv2 = (TextView) v.findViewById(R.id.txtDescription);
 		ImageView imgLock = (ImageView) v.findViewById(R.id.lock);
+		imgLock.setVisibility(ImageView.INVISIBLE);
 		
 		tv.setText(cursor.getString(1));
 		
@@ -63,6 +64,7 @@ public class CustomAdapter extends BaseAdapter{
 		
 		if (!cursor.getString(JadwalTable.FIELD_TYPE).equals("system")) {
 			imgLock.setImageResource(R.drawable.edit_black);
+			imgLock.setVisibility(ImageView.VISIBLE);
 		}
 		
 		return v;
