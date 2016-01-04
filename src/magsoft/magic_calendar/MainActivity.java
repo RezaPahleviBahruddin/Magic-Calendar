@@ -193,7 +193,8 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+        	startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+			return true;
         }
         else if (id == R.id.action_show_schedules){
         	Intent intent = new Intent(this, ListReminderActivity.class);

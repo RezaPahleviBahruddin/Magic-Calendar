@@ -106,7 +106,6 @@ public class ListReminderActivity extends FragmentActivity implements View.OnLay
 			Intent intent = new Intent(getApplicationContext(), AddReminderActivity.class);
 			startActivity(intent);
 			break;
-
 		default:
 			break;
 		}
