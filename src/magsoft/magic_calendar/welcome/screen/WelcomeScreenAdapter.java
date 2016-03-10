@@ -3,6 +3,7 @@ package magsoft.magic_calendar.welcome.screen;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.view.PagerAdapter;
@@ -80,7 +81,7 @@ public class WelcomeScreenAdapter extends PagerAdapter{
 						ProgressDialog pd;
 						@Override
 						protected void onPreExecute() {
-							pd = ProgressDialog.show(context, "Instantiate", "Please wait..");
+							pd = ProgressDialog.show(context, "Instantiate", "Please wait.. this will take a view minute");
 							pd.setCancelable(false);
 							pd.setIndeterminate(true);
 							
@@ -102,9 +103,14 @@ public class WelcomeScreenAdapter extends PagerAdapter{
 								pd.dismiss();
 							}
 							
+							// check for wheter the application is on the first time launch or not
+					        final String PREF_NAME = "MagicCalendarSettings";
+					    	SharedPreferences settings = context.getSharedPreferences(PREF_NAME, 0);
+					    	settings.edit().putBoolean("my_first_time", false).commit();
+					    	
 							Intent intent = new Intent(context, MainActivity.class);
 							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-							context.startActivity(intent);
+							context.startActivity(intent);							
 						}
 					};
 					

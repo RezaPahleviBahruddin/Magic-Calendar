@@ -15,6 +15,7 @@ import magsoft.magic_calendar.welcome.screen.WelcomeScreenView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -192,11 +193,16 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+        	startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+			return true;
         }
         else if (id == R.id.action_show_schedules){
-        	Intent i = new Intent(this, ListReminderActivity.class);
-        	startActivity(i);
+        	Intent intent = new Intent(this, ListReminderActivity.class);
+        	intent.putExtra("year", month.get(Calendar.YEAR));
+    		intent.putExtra("month", month.get(Calendar.MONTH));
+    		intent.putExtra("day", month.get(Calendar.DAY_OF_MONTH));
+    		intent.putExtra("type", "monthly");
+        	startActivity(intent);
         	return true;
         }
         return super.onOptionsItemSelected(item);

@@ -47,12 +47,24 @@ public class CustomAdapter extends BaseAdapter{
 		TextView tv = (TextView) v.findViewById(R.id.txtEdit);
 		TextView tv2 = (TextView) v.findViewById(R.id.txtDescription);
 		ImageView imgLock = (ImageView) v.findViewById(R.id.lock);
+		imgLock.setVisibility(ImageView.INVISIBLE);
 		
 		tv.setText(cursor.getString(1));
-		tv2.setText(cursor.getString(3));
+		
+		String description = cursor.getString(JadwalTable.FIELD_DESCRIPTION);
+		
+		if (description.length() > 20){
+			description = description.substring(0, 20);
+		}
+		else if (description.length() < 1) {
+			description = "No description";
+		}
+		
+		tv2.setText(description);
 		
 		if (!cursor.getString(JadwalTable.FIELD_TYPE).equals("system")) {
 			imgLock.setImageResource(R.drawable.edit_black);
+			imgLock.setVisibility(ImageView.VISIBLE);
 		}
 		
 		return v;
